@@ -1,2 +1,11 @@
 # screen_translation
 画面の文字をOCRし翻訳します
+
+使い方
+ご自身のpython環境にrequirements txtにあるモジュールをインストールしScreen_OCR.pyを実行してください
+
+CPUのみの実行になりますので実行中はCPUにかなりの負荷がかかります
+
+setup_filesにあるファイルはsetup.exeを作成するためにあります
+
+翻訳機能はpywebviewでgoogle翻訳を開きます
