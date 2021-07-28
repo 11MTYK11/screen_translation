@@ -130,6 +130,8 @@ uninstallname = "画面翻訳君"
 uninstallset = False
 askrunname = "画面翻訳君"
 dltype = "google_drive"
+menuset = False
+rightname = "None"
 
 try:
     if sys.argv[1] == "uninstall":
@@ -267,14 +269,15 @@ while True:
                                 os.makedirs(menudir)
                             except :
                                 pass
-                            try:
-                                path = r'Software\Classes\*\shell\hash_check\command'
-                                key = winreg.CreateKeyEx(winreg.HKEY_CURRENT_USER, path, access=winreg.KEY_WRITE)
-                                winreg.SetValueEx(key, '', 0, winreg.REG_SZ,str('''"{}" "%V"'''.format(DST + "\\" + runname)))
-                                winreg.CloseKey(key)
-                            except:
-                                import traceback
-                                traceback.print_exc()
+                            if menuset:
+                                try:
+                                    path = f'Software\\Classes\\*\\shell\\{rightname}\\command'
+                                    key = winreg.CreateKeyEx(winreg.HKEY_CURRENT_USER, path, access=winreg.KEY_WRITE)
+                                    winreg.SetValueEx(key, '', 0, winreg.REG_SZ,str('''"{}" "%V"'''.format(DST + "\\" + runname)))
+                                    winreg.CloseKey(key)
+                                except:
+                                    import traceback
+                                    traceback.print_exc()
                             uuiddata = str(uuid.uuid4())
                             data = {
                                 "installpath":str(DST),
@@ -360,14 +363,15 @@ while True:
                         os.makedirs(menudir)
                     except :
                         pass
-                    try:
-                        path = r'Software\Classes\*\shell\hash_check\command'
-                        key = winreg.CreateKeyEx(winreg.HKEY_CURRENT_USER, path, access=winreg.KEY_WRITE)
-                        winreg.SetValueEx(key, '', 0, winreg.REG_SZ,str('''"{}" "%V"'''.format(DST + "\\" + runname)))
-                        winreg.CloseKey(key)
-                    except:
-                        import traceback
-                        traceback.print_exc()
+                    if menuset:
+                        try:
+                            path = f'Software\\Classes\\*\\shell\\{rightname}\\command'
+                            key = winreg.CreateKeyEx(winreg.HKEY_CURRENT_USER, path, access=winreg.KEY_WRITE)
+                            winreg.SetValueEx(key, '', 0, winreg.REG_SZ,str('''"{}" "%V"'''.format(DST + "\\" + runname)))
+                            winreg.CloseKey(key)
+                        except:
+                            import traceback
+                            traceback.print_exc()
                     uuiddata = str(uuid.uuid4())
                     data = {
                         "installpath":str(DST),
@@ -541,6 +545,13 @@ while True:
                             home = os.getenv('USERPROFILE')
                         else:
                             home = os.getenv('HOME')
+                        if menuset:
+                            path = f'Software\\Classes\\*\\shell'
+                            try:
+                                winreg.DeleteKeyEx(winreg.HKEY_CURRENT_USER,path + "\\{rightname}\\command")
+                                winreg.DeleteKeyEx(winreg.HKEY_CURRENT_USER,path + "\\{rightname}")
+                            except:
+                                pass
                         desktop_dir = os.path.join(home, 'Desktop')
                         menudir = f"C:\\Users\\{os.getlogin()}\\AppData\\Roaming\\Microsoft\\Windows\\Start Menu\\Programs\\{menuname}"
                         try:
