@@ -153,7 +153,8 @@ def doneocrth():
         ocrimg = imgdata.resize((int(imgdata.width*sizedataw),int(imgdata.height*sizedatah))) 
         scanimg = ocrimg.crop((firstx.get(),firsty.get(),secondx.get(),secondy.get()))
         cv2img = pil2cv(scanimg)
-        result = reader.readtext(cv2img)
+        img_gray = cv2.cvtColor(cv2img, cv2.COLOR_BGR2GRAY)
+        result = reader.readtext(img_gray)
         for data in result:
             try:
                 count += 1
